@@ -1,4 +1,9 @@
 Newsmeter::Application.routes.draw do
+
+  resources :pages
+
+  post 'send_page', controller: 'pages', action: 'send_page'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
