@@ -1,6 +1,6 @@
 Newsmeter::Application.routes.draw do
 
-  resources :pages
+  # resources :pages
 
   post 'send_page', controller: 'pages', action: 'send_page'
 
