@@ -2,7 +2,7 @@ Newsmeter::Application.routes.draw do
 
   # resources :pages
 
-  match "send_page" => "pages#send_page", via: [:get, :post]
+  match "send_page" => "page_views#send_page", via: [:get, :post]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
