@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  actual_url: MyString
+  og_url: MyString
+  og_title: MyString
+  og_type: MyString
+
+two:
+  user_id: 1
+  actual_url: MyString
+  og_url: MyString
+  og_title: MyString
+  og_type: MyString
