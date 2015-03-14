@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 			whitelist = Site.select(:domain).pluck(:domain)
 			is_whitelisted = false
 			whitelist.each do |x|
-				is_whitelisted = true if URI.parse(params[:url]).host.include? x
+				is_whitelisted = true if URI.parse(params[:url]).host.downcase.include? x
 			end
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
 
