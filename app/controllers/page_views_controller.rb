@@ -22,7 +22,7 @@ class PageViewsController < ApplicationController
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
 
 			if Page.select(:canonical_url).pluck(:canonical_url).include? params[:canonicalurl]
-				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => Page.find_by canonical_url: params[:canonicalurl]
+				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id
 				new_page_view.save
 			else
 				new_page = Page.new :canonical_url => params[:canonicalurl], :title => (params[:canonicaltitle] == "" ? nil: params[:canonicaltitle]), :page_type => (params[:ogtype] == "" ? nil: params[:ogtype]), :author => (params[:author] == "" ? nil: params[:author]), :keywords => (params[:keywords] == "" ? nil: params[:keywords]), :description => (params[:description] == "" ? nil: params[:description]), :site_id => site_id
