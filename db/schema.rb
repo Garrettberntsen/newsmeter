@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315223540) do
+ActiveRecord::Schema.define(version: 20150315223854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150315223540) do
     t.string   "keywords"
   end
 
+  add_index "pages", ["canonical_url"], name: "index_pages_on_canonical_url", unique: true, using: :btree
   add_index "pages", ["site_id"], name: "index_pages_on_site_id", using: :btree
 
   create_table "sites", force: true do |t|
