@@ -18,7 +18,7 @@ class PageViewsController < ApplicationController
 			end
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
 
-			new_page = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :og_url => (params[:ogurl] == "" ? nil : params[:ogurl]), :og_title => (params[:ogtitle] == "" ? nil : params[:ogtitle]), :og_type => (params[:ogtype] == "" ? nil : params[:ogtype]), :domain => (params[:url] == "" ? nil : URI.parse(params[:url]).host)
+			new_page = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :og_url => (params[:canonicalurl] == "" ? nil : params[:canonicalurl]), :og_title => (params[:canonicaltitle] == "" ? nil : params[:canonicaltitle]), :og_type => (params[:ogtype] == "" ? nil : params[:ogtype]), :domain => (params[:url] == "" ? nil : URI.parse(params[:url]).host)
 			new_page.save
 			# response.headers.delete('X-Frame-Options')
 			render :nothing => true, :status => 204
