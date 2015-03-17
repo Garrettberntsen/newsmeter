@@ -55,6 +55,7 @@ class PageViewsController < ApplicationController
 			# response.headers.delete('X-Frame-Options')
 			render :nothing => true, :status => 204
 		rescue => e
+			puts e.to_s
 			render :nothing => true, :status => 204
 		end
 
