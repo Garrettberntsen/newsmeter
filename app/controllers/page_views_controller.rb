@@ -6,7 +6,8 @@ class PageViewsController < ApplicationController
 
 	def send_page
 
-		if request.get?
+		# The second condition may occur when the page sends the page unload time (end_time), a request which only includes that one param
+		if (request.get?) || (params[:url].exists? == false)
 			render :nothing => true, :status => 204 and return
 		end
 
@@ -15,8 +16,6 @@ class PageViewsController < ApplicationController
 			is_whitelisted = false
 			site_id = nil
 			whitelist.each do |x|
-				puts ("HERE IT IS: " + params[:url])
-				puts ("HERE IT IS STRIPPED: " + params[:url].strip)
 				if URI.parse(URI.encode(params[:url].strip)).host.downcase.include? x.domain
 					is_whitelisted = true
 					site_id = x.id
