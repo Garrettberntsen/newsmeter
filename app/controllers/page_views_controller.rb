@@ -33,6 +33,22 @@ class PageViewsController < ApplicationController
 				puts "about to save entirely new page view after saving entirely new page"
 				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id
 				new_page_view.save
+
+				unless params[:keywords] == ""
+					keyword_array = params[:keywords].split(",").uniq
+					keyword_array.each do |x|
+						if Keyword.where("lower(keyword) = ?", x.downcase).count == 0
+							new_kw = Keyword.new :keyword => x
+							new_kw.save
+							new_pg_kw = PageKeyword.new :page_id => new_page_view.page_id, :keyword_id => new_kw.id
+							new_pg_kw.save
+						else
+							new_pg_kw = PageKeyword.new :page_id => new_page_view.page_id, :keyword_id => Keyword.where("lower(keyword) = ?", x.downcase).first.id
+							new_pg_kw.save
+						end
+					end
+				end
+
 			end
 
 			# response.headers.delete('X-Frame-Options')
