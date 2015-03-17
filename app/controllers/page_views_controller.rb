@@ -10,7 +10,7 @@ class PageViewsController < ApplicationController
 			render :nothing => true, :status => 204 and return
 		end
 
-		begin
+		# begin
 			whitelist = Site.all
 			is_whitelisted = false
 			site_id = nil
@@ -54,10 +54,10 @@ class PageViewsController < ApplicationController
 
 			# response.headers.delete('X-Frame-Options')
 			render :nothing => true, :status => 204
-		rescue => e
-			puts e.to_s
-			render :nothing => true, :status => 204
-		end
+		# rescue => e
+		#	puts e.to_s
+		#	render :nothing => true, :status => 204
+		# end
 
 	end
 
