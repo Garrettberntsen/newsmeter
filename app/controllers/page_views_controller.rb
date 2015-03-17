@@ -37,13 +37,14 @@ class PageViewsController < ApplicationController
 				unless params[:keywords] == ""
 					keyword_array = params[:keywords].split(",").uniq
 					keyword_array.each do |x|
-						if Keyword.where("lower(keyword) = ?", x.downcase).count == 0
-							new_kw = Keyword.new :keyword => x
+						y = x.strip
+						if Keyword.where("lower(keyword) = ?", y.downcase).count == 0
+							new_kw = Keyword.new :keyword => y
 							new_kw.save
 							new_pg_kw = PageKeyword.new :page_id => new_page_view.page_id, :keyword_id => new_kw.id
 							new_pg_kw.save
 						else
-							new_pg_kw = PageKeyword.new :page_id => new_page_view.page_id, :keyword_id => Keyword.where("lower(keyword) = ?", x.downcase).first.id
+							new_pg_kw = PageKeyword.new :page_id => new_page_view.page_id, :keyword_id => Keyword.where("lower(keyword) = ?", y.downcase).first.id
 							new_pg_kw.save
 						end
 					end
