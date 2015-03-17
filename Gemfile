@@ -38,6 +38,8 @@ end
 
 gem 'schema_plus_pg_indexes'
 
+ruby "2.2.0"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
