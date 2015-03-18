@@ -16,7 +16,7 @@ class PageViewsController < ApplicationController
 			is_whitelisted = false
 			site_id = nil
 			whitelist.each do |x|
-				if URI.parse(URI.encode(params[:url].strip)).host.downcase.include? x.domain
+				if URI.parse(params[:url]).host.downcase.include? x.domain
 					is_whitelisted = true
 					site_id = x.id
 				end
