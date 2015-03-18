@@ -11,7 +11,7 @@ class PageViewsController < ApplicationController
 			render :nothing => true, :status => 204 and return
 		end
 
-		# begin
+		begin
 			whitelist = Site.all
 			is_whitelisted = false
 			site_id = nil
@@ -22,16 +22,12 @@ class PageViewsController < ApplicationController
 				end
 			end
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
-			puts ("GOT PAST WHITELISTING OF " + params[:url])
 			if Page.select(:canonical_url).pluck(:canonical_url).include? params[:canonicalurl]
-				puts "about to save existing page to new page view"
 				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id
 				new_page_view.save
 			else
-				puts "about to save entirely new page"
 				new_page = Page.new :canonical_url => params[:canonicalurl], :title => (params[:canonicaltitle] == "" ? nil: params[:canonicaltitle]), :page_type => (params[:ogtype] == "" ? nil: params[:ogtype]), :author => (params[:author] == "" ? nil: params[:author]), :description => (params[:description] == "" ? nil: params[:description]), :site_id => site_id 
 				new_page.save
-				puts "about to save entirely new page view after saving entirely new page"
 				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id
 				new_page_view.save
 
@@ -55,10 +51,10 @@ class PageViewsController < ApplicationController
 
 			# response.headers.delete('X-Frame-Options')
 			render :nothing => true, :status => 204
-		# rescue => e
-		#	puts e.to_s
-		#	render :nothing => true, :status => 204
-		# end
+		rescue => e
+			puts e.to_s
+			render :nothing => true, :status => 204
+		end
 
 	end
 
