@@ -6,8 +6,11 @@ class PageViewsController < ApplicationController
 
 	def send_page
 
-		# The second condition may occur when the page sends the page unload time (end_time), a request which only includes that one param
-		if (request.get?) || (params.has_key?(:url) == false)
+		if request.get?
+			render :nothing => true, :status => 204 and return
+		end
+
+		if params.has_key?(:url) == false
 			render :nothing => true, :status => 204 and return
 		end
 
@@ -22,6 +25,7 @@ class PageViewsController < ApplicationController
 				end
 			end
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
+			new_page_view = nil
 			if Page.select(:canonical_url).pluck(:canonical_url).include? params[:canonicalurl]
 				new_page_view = PageView.new :user_id => 1, :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id
 				new_page_view.save
@@ -50,7 +54,7 @@ class PageViewsController < ApplicationController
 			end
 
 			# response.headers.delete('X-Frame-Options')
-			render :nothing => true, :status => 204
+			render :json => new_page_view.as_json(:only => [:id]), :status => 200
 		rescue => e
 			puts e.to_s
 			render :nothing => true, :status => 204
