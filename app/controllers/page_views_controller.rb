@@ -54,7 +54,7 @@ class PageViewsController < ApplicationController
 			end
 
 			# response.headers.delete('X-Frame-Options')
-			render :json => new_page_view.as_json(:only => [:id]), :status => 200
+			render :text => new_page_view.id.to_s, :status => 200
 		rescue => e
 			puts e.to_s
 			render :nothing => true, :status => 204
