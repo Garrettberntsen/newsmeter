@@ -11,6 +11,7 @@ class PageViewsController < ApplicationController
 		end
 
 		if params.has_key?(:url) == false
+			puts ("HEY " + params[:page_view_id])
 			update_page_view = PageView.find(params[:page_view_id].to_i)
 			update_page_view.ended_at = Time.at(params[:end_time].to_i / 1000)
 			update_page_view.save
