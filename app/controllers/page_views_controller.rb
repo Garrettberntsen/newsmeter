@@ -12,7 +12,7 @@ class PageViewsController < ApplicationController
 
 		if params.has_key?(:url) == false
 			update_page_view = PageView.find(params[:page_view_id].to_i)
-			update_page_view.ended_at = Time.at(params[:end_time].to_f / 1000)
+			update_page_view.ended_at = DateTime.now
 			update_page_view.save
 			render :nothing => true, :status => 204 and return
 		end
@@ -22,7 +22,7 @@ class PageViewsController < ApplicationController
 			is_whitelisted = false
 			site_id = nil
 			whitelist.each do |x|
-				if URI.parse(params[:url]).host.downcase.include? x.domain
+				if (URI.parse(params[:url]).host.downcase.include? ("." + x.domain)) || (URI.parse(params[:url]).host.downcase.include? ("://" + x.domain))
 					is_whitelisted = true
 					site_id = x.id
 				end
