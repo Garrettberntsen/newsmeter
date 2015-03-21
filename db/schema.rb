@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320032232) do
+ActiveRecord::Schema.define(version: 20150321171011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150320032232) do
     t.datetime "updated_at"
     t.integer  "page_id",    index: {name: "index_page_views_on_page_id"}
     t.datetime "ended_at"
+    t.string   "ip_address"
   end
 
   create_table "pages", force: :cascade do |t|
