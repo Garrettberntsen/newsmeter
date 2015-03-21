@@ -7,7 +7,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         if @user.persisted?
           sign_in_and_redirect @user, event: :authentication
           puts "HEY HEY HEY"
-          puts env["omniauth.auth"].extra.raw_info
+          puts request.env["omniauth.auth"].extra.raw_info
           set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
         else
           session["devise.#{provider}_data"] = env["omniauth.auth"]
