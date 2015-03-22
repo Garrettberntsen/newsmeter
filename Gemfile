@@ -38,12 +38,6 @@ end
 
 gem 'schema_plus_pg_indexes'
 
-gem 'devise'
-gem 'omniauth'
-gem 'omniauth-twitter'
-gem 'omniauth-facebook'
-gem 'omniauth-linkedin'
-
 ruby "2.2.0"
 
 # Use ActiveModel has_secure_password

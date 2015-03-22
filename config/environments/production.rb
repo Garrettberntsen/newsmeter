@@ -76,22 +76,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  # General app settings
-  config.app_domain = 'newsmeter.herokuapp.com'
-
-  # Email settings
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: config.app_domain }
-  config.action_mailer.smtp_settings = {
-    :port => '587',
-    :address => 'smtp.mandrillapp.com',
-    :enable_starttls_auto => true,
-    :user_name => ENV['MANDRILL_USERNAME'],
-    :password => ENV['MANDRILL_APIKEY'],
-    :domain => 'heroku.com',
-    :authentication => :plain
-  }
-
 end
