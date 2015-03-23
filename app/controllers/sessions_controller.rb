@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 	# As per comment here: http://stackoverflow.com/questions/15351985/session-not-persisting-across-redirect-with-omniauth-and-rails-4
-	skip_before_filter :verify_authenticity_token
+	# skip_before_filter :verify_authenticity_token
 
   def new
   end
@@ -19,8 +19,6 @@ class SessionsController < ApplicationController
 
   		# Create the session
   		session[:user_id] = auth.user.id
-  		puts ("HERE'S THE USER ID: " + auth.user.id.to_s)
-  		puts ("HERE'S THE SESSION ID: " + session[:user_id].to_s)
 
   		render :text => "Welcome #{auth.user.name}!"
   	end
