@@ -19,6 +19,8 @@ class SessionsController < ApplicationController
 
   		# Create the session
   		session[:user_id] = auth.user.id
+  		puts ("HERE'S THE USER ID: " + auth.user.id)
+  		puts ("HERE'S THE SESSION ID: " + session[:user_id])
 
   		render :text => "Welcome #{auth.user.name}!"
   	end

@@ -30,6 +30,7 @@ class PageViewsController < ApplicationController
 			end
 			render :nothing => true, :status => 204 and return if is_whitelisted == false
 			new_page_view = nil
+			puts ("About to save page view for this ID: " + session[:user_id])
 			if Page.select(:canonical_url).pluck(:canonical_url).include? params[:canonicalurl]
 				new_page_view = PageView.new :user_id => (session[:user_id].nil? ? 0 : session[:user_id]), :actual_url => (params[:url] == "" ? nil : params[:url]), :page_id => (Page.find_by canonical_url: params[:canonicalurl]).id, :ip_address => request.remote_ip
 				new_page_view.save
