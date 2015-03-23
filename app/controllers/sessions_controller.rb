@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
+  	puts auth_hash.extra.raw_info.friends.inspect
 
   	if session[:user_id]
   		# Means our user is signed in. Add the authorization to the user
