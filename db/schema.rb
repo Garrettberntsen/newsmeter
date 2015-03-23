@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322183641) do
+ActiveRecord::Schema.define(version: 20150323001652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authorizations", force: :cascade do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "keywords", force: :cascade do |t|
     t.string   "keyword",    limit: 255, index: {name: "index_keywords_on_keyword", unique: true, case_sensitive: false}
@@ -57,6 +65,13 @@ ActiveRecord::Schema.define(version: 20150322183641) do
     t.string   "language",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

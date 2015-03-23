@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get '/login', :to => 'sessions#new', :as => :login
+  match '/auth/:provider/callback', :to => 'sessions#create', via: [:get]
+  match '/auth/failure', :to => 'sessions#failure', via: [:get]
+  get '/logout', :to => 'sessions#destroy'
+
   # resources :pages
 
   match "send_page" => "page_views#send_page", via: [:get, :post]
