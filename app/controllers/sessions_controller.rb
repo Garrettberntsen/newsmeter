@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+	# As per comment here: http://stackoverflow.com/questions/15351985/session-not-persisting-across-redirect-with-omniauth-and-rails-4
+	skip_before_filter :verify_authenticity_token
+
   def new
   end
 
