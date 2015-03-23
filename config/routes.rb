@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback', :to => 'sessions#create', via: [:get]
   match '/auth/failure', :to => 'sessions#failure', via: [:get]
   get '/logout', :to => 'sessions#destroy'
+  get '/sites', :to => 'sites#index'
 
   # resources :pages
 
