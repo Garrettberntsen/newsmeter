@@ -1,6 +1,6 @@
 <h1>Page Views</h1>
 <p />
 <% @user.page_views.each do |x| %>
-	<%= x.actual_url %>
+	<%= link_to x.pages.title, x.actual_url %>
 	<br>
 <% end %>
