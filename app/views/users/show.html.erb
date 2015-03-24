@@ -1,6 +1,13 @@
 <h1>Page Views</h1>
 <p />
+<% cur_date = nil %>
 <% @user.page_views.order('created_at desc').each do |x| %>
+	<% if cur_date == nil %>
+		<% cur_date = x.created_at %>
+		<%= '#{x.created_at.strftime("%B %-d, %Y")}<p/>'.html_safe %>
+	<% end %>
+	<%= '<p/>#{x.created_at.strftime("%B %-d, %Y")}<p/>'.html_safe if cur_date.strftime("%B %-d, %Y") <> x.created_at.strftime("%B %-d, %Y") %>
+	<% cur_date = x.created_at %>
 	<%= link_to x.page.title, x.actual_url %>
 	<br>
 <% end %>
