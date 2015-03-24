@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user
   	if current_user.nil?
-  		redirect_to new_session_path, :notice => "You must first log in to access this page."
+  		redirect_to 'sessions#new', :notice => "You must first log in to access this page."
   	end
   end  
 
