@@ -8,6 +8,8 @@
 	<% end %>
 	<%= "<p/>#{x.created_at.strftime('%B %-d, %Y')}<p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 	<% cur_date = x.created_at %>
-	<%= link_to x.page.title, x.actual_url %>
+	<%= link_to x.page.title, x.actual_url %><%= ", by #{x.author}" unless x.author.nil? %>
 	<br>
+	<%= x.description unless x.description.nil? %>
+	<p/>
 <% end %>
