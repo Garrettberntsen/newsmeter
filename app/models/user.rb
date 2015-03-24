@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	has_many :authorizations
+	has_many :page_views
 	validates :name, :email, :presence => true
 
 	def add_provider(auth_hash)

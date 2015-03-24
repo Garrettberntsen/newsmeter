@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   match '/auth/failure', :to => 'sessions#failure', via: [:get]
   get '/logout', :to => 'sessions#destroy'
   get '/sites', :to => 'sites#index'
+  get '/me', :to => 'users#show'
 
   # resources :pages
 
