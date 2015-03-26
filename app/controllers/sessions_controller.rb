@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
   		# Create the session
   		session[:user_id] = auth.user.id
 
-  		render :text => "Welcome #{auth.user.name}! Also: #{CGI.escapeHTML(z)}"
+  		render :text => "Welcome #{auth.user.name}! Also: #{z}"
   	end
   end
 
