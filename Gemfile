@@ -41,6 +41,8 @@ gem 'schema_plus_pg_indexes'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
+gem 'foundation-rails'
+
 ruby "2.2.0"
 
 # Use ActiveModel has_secure_password
