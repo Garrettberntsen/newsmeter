@@ -1,0 +1,10 @@
+<div class="small-2"></div>
+<div class="small-8">
+	<h1>Sites List</h1>
+	<p />
+	<% @sites.order('domain asc').each do |x| %>
+		<%= x.domain %> - <%= x.organization %>
+		<br>
+	<% end %>
+</div>
+<div class="small-2"></div>
