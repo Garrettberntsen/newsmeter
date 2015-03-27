@@ -6,14 +6,18 @@
 	<% @user.page_views.order('created_at desc').each do |x| %>
 		<% if cur_date == nil %>
 			<% cur_date = x.created_at %>
-			<%= "<strong>#{x.created_at.strftime('%B %-d, %Y')}</strong><p/>".html_safe %>
+			<%= "<span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe %>
 		<% end %>
-		<%= "<p/><strong>#{x.created_at.strftime('%B %-d, %Y')}</strong><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
+		<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 		<% cur_date = x.created_at %>
-		<%= link_to x.page.title, x.actual_url %><%= ", <em>by #{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe unless x.page.author.nil? %>
+		<% unless x.page.author.nil? %>
+			<%= link_to x.page.title, x.actual_url %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
+		<% else %>
+			<%= link_to x.page.title, x.actual_url %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
+		<% end %>
 		<br>
 		<% unless x.ended_at.nil? %>
-			<%= ("Time on page: " + Time.at(x.ended_at - x.created_at).utc.strftime("%H:%M:%S")) %>
+			<%= ("<em>Time on page: " + Time.at(x.ended_at - x.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
 			<br>
 		<% end %>
 		<%= x.page.description unless x.page.description.nil? %>
