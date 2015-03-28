@@ -3,10 +3,10 @@
 	<h1>Page Views</h1>
 	<p />
 	<% cur_date = nil %>
-	<% unless params.has_key?(:keyword) %>
+	<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
 		<% page_views = @user.page_views %>
 	<% else %>
-		<% page_views = PageView.joins(:keywords).where('keywords.keyword = ? and page_views.user_id = ?', params[:keyword], @user.id) %>
+		<% page_views = PageView.joins(:keywords).where('lower(keywords.keyword) = ? and page_views.user_id = ?', params[:keyword].downcase, @user.id) %>
 	<% end %>
 	<% page_views.order('created_at desc').each do |x| %>
 		<% if cur_date == nil %>
