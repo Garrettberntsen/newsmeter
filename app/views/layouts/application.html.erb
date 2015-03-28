@@ -23,13 +23,15 @@
         <section class="top-bar-section">
           <ul class="left">
             <li class="has-form">
-              <form>
+              <form id="searchForm">
                 <div class="row collapse">
                   <div class="small-8 columns">
-                    <input type="text" placeholder="Search Keywords">
+                    <input type="text" name="keyword" id="keyword" placeholder="Search Keywords">
                   </div>
                   <div class="small-4 columns">
-                    <a href="#" class="alert button expand" type="submit">Search</a>
+                    <!-- <a href="#" class="alert button expand" type="submit">Search</a> -->
+                    <!-- <input type="submit" style="display:none" id="submitButton" name="submitButton"> -->
+                    <%= link_to 'Search', "javascript:void(0)", :onclick => "document.getElementById('searchForm').submit();", class: 'alert button expand' %>
                   </div>                
                 </div>
               </form>
