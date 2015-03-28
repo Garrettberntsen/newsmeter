@@ -43,6 +43,8 @@ gem 'omniauth-facebook'
 
 gem 'foundation-rails'
 
+gem 'pg_search'
+
 ruby "2.2.0"
 
 # Use ActiveModel has_secure_password
