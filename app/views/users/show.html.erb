@@ -3,7 +3,12 @@
 	<h1>Page Views</h1>
 	<p />
 	<% cur_date = nil %>
-	<% @user.page_views.order('created_at desc').each do |x| %>
+	<% unless params.has_key?(:keyword) %>
+		<% page_views = @user.page_views %>
+	<% else %>
+		<% page_views = PageView.joins(:keywords).where('keywords.keyword = ? and page_views.user_id = ?', params[:keyword], @user.id) %>
+	<% end %>
+	<% page_views.order('created_at desc').each do |x| %>
 		<% if cur_date == nil %>
 			<% cur_date = x.created_at %>
 			<%= "<span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe %>
