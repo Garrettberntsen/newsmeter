@@ -15,18 +15,19 @@
 		<% end %>
 		<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 		<% cur_date = x.created_at %>
-		<% unless x.page.author.nil? %>
-			<%= link_to x.page.title, x.actual_url %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
-		<% else %>
-			<%= link_to x.page.title, x.actual_url %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
-		<% end %>
-		<br>
-		<% unless x.ended_at.nil? %>
-			<%= ("<em>Time on page: " + Time.at(x.ended_at - x.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
+		<div class="panel">
+			<% unless x.page.author.nil? %>
+				<%= link_to x.page.title, x.actual_url %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
+			<% else %>
+				<%= link_to x.page.title, x.actual_url %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
+			<% end %>
 			<br>
-		<% end %>
-		<%= x.page.description unless x.page.description.nil? %>
-		<p/>
+			<% unless x.ended_at.nil? %>
+				<%= ("<em>Time on page: " + Time.at(x.ended_at - x.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
+				<br>
+			<% end %>
+			<%= x.page.description unless x.page.description.nil? %>
+		</div>
 	<% end %>
 </div>
 <div class="large-2 columns"></div>
