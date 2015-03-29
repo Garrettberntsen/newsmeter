@@ -7,7 +7,9 @@
 		<% page_views = @user.page_views.order('created_at desc') %>
 	<% else %>
 		<!-- <% page_views = PageView.joins(:keywords).where('lower(keywords.keyword) = ? and page_views.user_id = ?', params[:keyword].downcase, @user.id) %> -->
-		<% page_views = PageView.where('page_id in (?) and page_views.user_id = ?', Page.find_relevant_pages(params[:keyword]).map(&:id), @user.id) %>
+		<% search_non_articles = "and pages.page_type = 'article'" %>
+		<% search_non_articles = "" if params.has_key?(:nonarticles) %>
+		<% page_views = PageView.joins(:pages).where(('page_id in (?) and page_views.user_id = ? ' + search_non_articles), Page.find_relevant_pages(params[:keyword]).map(&:id), @user.id) %>
 	<% end %>
 	<% page_views.each do |x| %>
 		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>

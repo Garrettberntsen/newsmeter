@@ -25,13 +25,16 @@
             <li class="has-form">
               <form id="searchForm">
                 <div class="row collapse">
-                  <div class="small-8 columns">
+                  <div class="small-3 columns">
                     <input type="text" name="keyword" id="keyword" placeholder="Search Term">
                   </div>
-                  <div class="small-4 columns">
+                  <div class="small-3 columns">
                     <!-- <a href="#" class="alert button expand" type="submit">Search</a> -->
                     <!-- <input type="submit" style="display:none" id="submitButton" name="submitButton"> -->
                     <%= link_to 'Search', "javascript:void(0)", :onclick => "document.getElementById('searchForm').submit();", class: 'alert button expand' %>
+                  </div>
+                  <div class="small-6 columns">
+                    <input id="nonarticles" name="nonarticles" value="yes" type="checkbox"><label for="nonarticles">Search non-articles</label>
                   </div>                
                 </div>
               </form>
