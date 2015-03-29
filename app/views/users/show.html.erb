@@ -20,9 +20,9 @@
 		<% end %>
 		<div class="panel">
 			<% unless x.page.author.nil? %>
-				<%= link_to x.page.title, x.actual_url %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
+				<%= link_to x.page.title, x.actual_url, :target => "_blank" %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
 			<% else %>
-				<%= link_to x.page.title, x.actual_url %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
+				<%= link_to x.page.title, x.actual_url, :target => "_blank" %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
 			<% end %>
 			<br>
 			<% unless x.ended_at.nil? %>
