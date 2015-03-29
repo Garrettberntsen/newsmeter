@@ -1,6 +1,6 @@
 <div class="large-2 columns"></div>
 <div class="small-12 large-8 columns">
-	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <span class=\"label\">#{params[:keyword].strip}</span>".html_safe : "Page Views" %></h1>
+	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <kbd>#{params[:keyword].strip}</kbd>".html_safe : "Page Views" %></h1>
 	<p />
 	<% cur_date = nil %>
 	<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
