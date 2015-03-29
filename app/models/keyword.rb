@@ -1,3 +1,6 @@
 class Keyword < ActiveRecord::Base
-	has_many :pages, through: :page_keywords
+  include PgSearch
+  multisearchable :against => :keyword
+  
+  has_many :pages, through: :page_keywords
 end
