@@ -3,4 +3,5 @@ class Keyword < ActiveRecord::Base
   multisearchable :against => :keyword
   
   has_many :pages, through: :page_keywords
+  has_many :page_keywords
 end
