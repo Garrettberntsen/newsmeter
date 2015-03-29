@@ -1,9 +1,9 @@
 class Page < ActiveRecord::Base
   include PgSearch
   multisearchable :against => {
-    :title => 'A',
-    :author => 'C',
-    :description => 'D'
+    [:title => 'A'],
+    [:author => 'C'],
+    [:description => 'D']
   }
 
   belongs_to :site
