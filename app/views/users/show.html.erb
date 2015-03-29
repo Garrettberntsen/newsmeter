@@ -1,21 +1,23 @@
 <div class="large-2 columns"></div>
 <div class="small-12 large-8 columns">
-	<h1>Page Views</h1>
+	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <span class=\"label\">#{params[:keyword].strip}</span>".html_safe : "Page Views" %></h1>
 	<p />
 	<% cur_date = nil %>
 	<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
-		<% page_views = @user.page_views %>
+		<% page_views = @user.page_views.order('created_at desc') %>
 	<% else %>
 		<!-- <% page_views = PageView.joins(:keywords).where('lower(keywords.keyword) = ? and page_views.user_id = ?', params[:keyword].downcase, @user.id) %> -->
 		<% page_views = PageView.where('page_id in (?) and page_views.user_id = ?', Page.find_relevant_pages(params[:keyword]).map(&:id), @user.id) %>
 	<% end %>
-	<% page_views.order('created_at desc').each do |x| %>
-		<% if cur_date == nil %>
+	<% page_views.each do |x| %>
+		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
+			<% if cur_date == nil %>
+				<% cur_date = x.created_at %>
+				<%= "<span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe %>
+			<% end %>
+			<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 			<% cur_date = x.created_at %>
-			<%= "<span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe %>
 		<% end %>
-		<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
-		<% cur_date = x.created_at %>
 		<div class="panel">
 			<% unless x.page.author.nil? %>
 				<%= link_to x.page.title, x.actual_url %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
