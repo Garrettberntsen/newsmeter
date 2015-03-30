@@ -20,10 +20,10 @@
 			<% cur_date = x.created_at %>
 		<% end %>
 		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
-			<%= render "panel", locals: {y: x} %>
+			<%= render partial: "panel", locals: {y: x} %>
 		<% else %>
 			<% x.page_views.order('created_at desc').each do |y| %>
-				<%= render "panel", locals: {y: y} %>
+				<%= render partial: "panel", locals: {y: y} %>
 			<% end %>
 		<% end %>
 	<% end %>
