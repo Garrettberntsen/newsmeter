@@ -8,7 +8,7 @@
 	<% else %>
 		<% search_non_articles = "and pages.page_type = 'article'" %>
 		<% search_non_articles = "" if params.has_key?(:nonarticles) %>
-		<% page_views = Page.find_relevant_pages(params[:keyword].strip).joins(:page_views).where(("page_views.user_id = ? " + search_non_articles), @user.id) %>
+		<% page_views = Page.find_relevant_pages(params[:keyword].strip).joins(:page_views).where(("page_views.user_id = ? " + search_non_articles), @user.id).uniq %>
 	<% end %>
 	<% page_views.each do |x| %>
 		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
