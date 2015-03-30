@@ -12,6 +12,7 @@
 		<% page_views = PageView.joins(:page).where(('page_id in (?) and page_views.user_id = ? ' + search_non_articles), Page.find_relevant_pages(params[:keyword]).map(&:id), @user.id) %>
 	<% end %>
 	<% page_views.each do |x| %>
+		<% puts (x.page.title + ": " + x.pg_search_rank) if params.has_key?(:keyword) && params[:keyword].strip != "" %>
 		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
 			<% if cur_date == nil %>
 				<% cur_date = x.created_at %>
