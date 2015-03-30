@@ -20,19 +20,21 @@
 			<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 			<% cur_date = x.created_at %>
 		<% end %>
-		<div class="panel">
-			<% unless x.page.author.nil? %>
-				<%= link_to x.page.title, x.actual_url, :target => "_blank" %><%= ", by <em>#{x.page.author}</em> for <strong>#{x.page.site.organization}</strong>".html_safe %>
-			<% else %>
-				<%= link_to x.page.title, x.actual_url, :target => "_blank" %><%= ", for <strong>#{x.page.site.organization}</strong>".html_safe %>
-			<% end %>
-			<br>
-			<% unless x.ended_at.nil? %>
-				<%= ("<em>Time on page: " + Time.at(x.ended_at - x.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
+		<% x.page_views.order('created_at desc').each do |y| %>
+			<div class="panel">
+				<% unless x.author.nil? %>
+					<%= link_to x.title, y.actual_url, :target => "_blank" %><%= ", by <em>#{x.author}</em> for <strong>#{x.site.organization}</strong>".html_safe %>
+				<% else %>
+					<%= link_to x.title, y.actual_url, :target => "_blank" %><%= ", for <strong>#{x.site.organization}</strong>".html_safe %>
+				<% end %>
 				<br>
-			<% end %>
-			<%= x.page.description unless x.page.description.nil? %>
-		</div>
+				<% unless y.ended_at.nil? %>
+					<%= ("<em>Time on page: " + Time.at(y.ended_at - y.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
+					<br>
+				<% end %>
+				<%= x.description unless x.description.nil? %>
+			</div>
+		<% end %>
 	<% end %>
 </div>
 <div class="large-2 columns"></div>
