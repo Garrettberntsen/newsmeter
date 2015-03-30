@@ -1,0 +1,13 @@
+<div class="panel">
+	<% unless y.page.author.nil? %>
+		<%= link_to y.page.title, y.actual_url, :target => "_blank" %><%= ", by <em>#{y.page.author}</em> for <strong>#{y.page.site.organization}</strong>".html_safe %>
+	<% else %>
+		<%= link_to y.page.title, y.actual_url, :target => "_blank" %><%= ", for <strong>#{y.page.site.organization}</strong>".html_safe %>
+	<% end %>
+	<br>
+	<% unless y.ended_at.nil? %>
+		<%= ("<em>Time on page: " + Time.at(y.ended_at - y.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
+		<br>
+	<% end %>
+	<%= y.page.description unless y.page.description.nil? %>
+</div>

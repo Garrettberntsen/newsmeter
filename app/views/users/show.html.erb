@@ -6,7 +6,6 @@
 	<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
 		<% page_views = @user.page_views.order('created_at desc') %>
 	<% else %>
-		<!-- <% page_views = PageView.joins(:keywords).where('lower(keywords.keyword) = ? and page_views.user_id = ?', params[:keyword].downcase, @user.id) %> -->
 		<% search_non_articles = "and pages.page_type = 'article'" %>
 		<% search_non_articles = "" if params.has_key?(:nonarticles) %>
 		<% page_views = Page.find_relevant_pages(params[:keyword].strip).joins(:page_views).where(("page_views.user_id = ? " + search_non_articles), @user.id) %>
@@ -20,20 +19,12 @@
 			<%= "<p/><span class=\"label\">#{x.created_at.strftime('%B %-d, %Y')}</span><p/>".html_safe unless cur_date.strftime('%B %-d, %Y') == x.created_at.strftime('%B %-d, %Y') %>
 			<% cur_date = x.created_at %>
 		<% end %>
-		<% x.page_views.order('created_at desc').each do |y| %>
-			<div class="panel">
-				<% unless x.author.nil? %>
-					<%= link_to x.title, y.actual_url, :target => "_blank" %><%= ", by <em>#{x.author}</em> for <strong>#{x.site.organization}</strong>".html_safe %>
-				<% else %>
-					<%= link_to x.title, y.actual_url, :target => "_blank" %><%= ", for <strong>#{x.site.organization}</strong>".html_safe %>
-				<% end %>
-				<br>
-				<% unless y.ended_at.nil? %>
-					<%= ("<em>Time on page: " + Time.at(y.ended_at - y.created_at).utc.strftime("%H:%M:%S") + "</em>").html_safe %>
-					<br>
-				<% end %>
-				<%= x.description unless x.description.nil? %>
-			</div>
+		<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
+			<%= render "panel", locals: {y: x} %>
+		<% else %>
+			<% x.page_views.order('created_at desc').each do |y| %>
+				<%= render "panel", locals: {y: y} %>
+			<% end %>
 		<% end %>
 	<% end %>
 </div>
