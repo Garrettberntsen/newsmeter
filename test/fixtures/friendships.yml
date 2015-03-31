@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  friend_id: 1
+  sharing_scope: MyString
+  user_id: 
+
+two:
+  friend_id: 1
+  sharing_scope: MyString
+  user_id: 
