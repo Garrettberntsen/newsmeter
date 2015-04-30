@@ -1,4 +1,80 @@
-<div class="large-2 columns"></div>
+<%
+
+articles_array = PageView.joins(:page => :site).where('user_id = ? and date(page_views.created_at) >= (date(now()) - 7)', @user.id).group('date(page_views.created_at), sites.organization').pluck('sites.organization, date(page_views.created_at), count(distinct pages.id)').sort_by { |x, y, z| [x,y] }.group_by(&:first).map{|a,b| [a, Hash[*(b.map{|c,d,e| [d,e]}).flatten] ] }
+
+new_article_array = []
+
+articles_array.each do |org,daycounts|
+
+	if daycounts.count == 7
+		new_article_array << [org, daycounts]
+		next
+	end
+
+	temp_hash = {}
+
+	(0..6).each do |i|
+
+		if daycounts.has_key? (DateTime.now.to_date - (6 - i))
+			temp_hash[(DateTime.now.to_date - (6 - i))] = daycounts[(DateTime.now.to_date - (6 - i))]
+		else
+			temp_hash[(DateTime.now.to_date - (6 - i))] = 0
+		end
+
+	end
+
+	new_article_array << [org, temp_hash]
+
+end
+
+chart_array = []
+new_article_array.each do |x|
+	chart_array << {name: x[0], data: x[1].map{|a,b| b }}
+end
+
+%>
+
+<script>
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'area'
+        },
+        title: {
+            text: 'Articles by Site'
+        },
+        xAxis: {
+            categories: ['<%= DateTime.now.to_date - 6 %>', '<%= DateTime.now.to_date - 5 %>', '<%= DateTime.now.to_date - 4 %>', '<%= DateTime.now.to_date - 3 %>', '<%= DateTime.now.to_date - 2 %>', '<%= DateTime.now.to_date - 1 %>', '<%= DateTime.now.to_date %>'],
+            tickmarkPlacement: 'on',
+            title: {
+                enabled: false
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Articles'
+            }
+        },
+        tooltip: {
+            shared: true,
+            valueSuffix: ' articles'
+        },
+        plotOptions: {
+            area: {
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1,
+                marker: {
+                    lineWidth: 1,
+                    lineColor: '#666666'
+                }
+            }
+        },
+        series: <%= chart_array.to_json %>
+    });
+});
+</script>
+
 <div class="small-12 large-8 columns">
 	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <kbd>#{params[:keyword].strip}</kbd>".html_safe : "Page Views" %></h1>
 	<p />
@@ -28,4 +104,4 @@
 		<% end %>
 	<% end %>
 </div>
-<div class="large-2 columns"></div>
+<div class="large-4 columns" id="container"></div>
