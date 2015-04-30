@@ -74,7 +74,10 @@ $(function () {
     });
 });
 </script>
-
+<div class="row">
+	<div class="small-12 columns" id="container"></div>
+</div>
+<div class="large-2 columns"></div>
 <div class="small-12 large-8 columns">
 	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <kbd>#{params[:keyword].strip}</kbd>".html_safe : "Page Views" %></h1>
 	<p />
@@ -104,4 +107,4 @@ $(function () {
 		<% end %>
 	<% end %>
 </div>
-<div class="large-4 columns" id="container"></div>
+<div class="large-2 columns"></div>
