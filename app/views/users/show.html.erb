@@ -1,6 +1,6 @@
 <%
 
-articles_array = PageView.joins(:page => :site).where('user_id = ? and date(page_views.created_at) >= (date(now()) - 6)', @user.id).group('date(page_views.created_at), sites.organization').pluck('sites.organization, date(page_views.created_at), count(distinct pages.id)').sort_by { |x, y, z| [x,y] }.group_by(&:first).map{|a,b| [a, Hash[*(b.map{|c,d,e| [d,e]}).flatten] ] }
+articles_array = PageView.joins(:page => :site).where('user_id = ? and date(page_views.created_at::timestamptz AT TIME ZONE \'America/New_York\') >= (date(now()) - 6)', @user.id).group('date(page_views.created_at::timestamptz AT TIME ZONE \'America/New_York\'), sites.organization').pluck('sites.organization, date(page_views.created_at::timestamptz AT TIME ZONE \'America/New_York\'), count(distinct pages.id)').sort_by { |x, y, z| [x,y] }.group_by(&:first).map{|a,b| [a, Hash[*(b.map{|c,d,e| [d,e]}).flatten] ] }
 
 new_article_array = []
 
