@@ -40,9 +40,6 @@ $(function () {
         chart: {
             type: 'area'
         },
-        title: {
-            text: 'Articles by Site'
-        },
         xAxis: {
             categories: ['<%= DateTime.now.to_date - 6 %>', '<%= DateTime.now.to_date - 5 %>', '<%= DateTime.now.to_date - 4 %>', '<%= DateTime.now.to_date - 3 %>', '<%= DateTime.now.to_date - 2 %>', '<%= DateTime.now.to_date - 1 %>', '<%= DateTime.now.to_date %>'],
             tickmarkPlacement: 'on',
@@ -83,7 +80,7 @@ $(function () {
 	<p />
 	<% cur_date = nil %>
 	<% unless params.has_key?(:keyword) && params[:keyword].strip != "" %>
-		<% page_views = @user.page_views.order('created_at desc') %>
+		<% page_views = @user.page_views.where('date(page_views.created_at::timestamptz AT TIME ZONE \'America/New_York\') >= (date(now()) - 6)').order('created_at desc') %>
 	<% else %>
 		<% search_non_articles = "and pages.page_type = 'article'" %>
 		<% search_non_articles = "" if params.has_key?(:nonarticles) %>
