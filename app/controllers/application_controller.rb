@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_time_zone(&block)
-    Time.use_zone(current_user.time_zone, &block)
+    Time.use_zone("Eastern Time (US & Canada)", &block)
   end  
 
 end
