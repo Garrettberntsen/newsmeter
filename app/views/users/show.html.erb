@@ -40,6 +40,9 @@ $(function () {
         chart: {
             type: 'area'
         },
+        title: {
+            text: ''
+        },        
         xAxis: {
             categories: ['<%= DateTime.now.to_date - 6 %>', '<%= DateTime.now.to_date - 5 %>', '<%= DateTime.now.to_date - 4 %>', '<%= DateTime.now.to_date - 3 %>', '<%= DateTime.now.to_date - 2 %>', '<%= DateTime.now.to_date - 1 %>', '<%= DateTime.now.to_date %>'],
             tickmarkPlacement: 'on',
