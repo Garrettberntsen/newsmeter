@@ -59,7 +59,7 @@ class PageViewsController < ApplicationController
 
 			# response.headers.delete('X-Frame-Options')
 			if current_user
-				render :text => (new_page_view.id.to_s + "," + current_user.id), :status => 200
+				render :text => (new_page_view.id.to_s + "," + current_user.id.to_s), :status => 200
 			else
 				render :text => new_page_view.id.to_s, :status => 200
 			end
