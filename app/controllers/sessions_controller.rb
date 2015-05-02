@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   		User.find(session[:user_id]).add_provider(auth_hash)
 
   		# render :text => "You can now login using #{auth_hash["provider"].capitalize} too!"
-      render :js => "localStorage.setItem(\"newsmeter_id\", \"#{session[:user_id].to_s}\");"
+      render :js => "localStorage.setItem('newsmeter_id', '#{session[:user_id].to_s}'); console.log(localStorage.getItem('newsmeter_id'));"
 
   	else
   		#Log him in or sign him up
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
   		session[:user_id] = auth.user.id
 
   		render :text => "Welcome #{auth.user.name}! Also: #{z}"
-      # render :js => "localStorage.setItem(\"newsmeter_id\", \"#{session[:user_id].to_s}\");"
+      render :js => "localStorage.setItem('newsmeter_id', '#{session[:user_id].to_s}'); console.log(localStorage.getItem('newsmeter_id'));"
 
   	end
   end
