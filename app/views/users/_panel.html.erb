@@ -6,8 +6,8 @@
 	<% end %>
 	<% unless y.ended_at.nil? %>
 		<%= ("<span class='label'><i class='fi-clock'></i> " + Time.at(y.ended_at - y.created_at).utc.strftime("%H:%M:%S") + "</span>").html_safe %>
-		<br>
 	<% end %>
+	<br>
 	<br>
 	<%= y.page.description unless y.page.description.nil? %>
 </div>
