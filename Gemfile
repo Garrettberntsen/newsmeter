@@ -45,6 +45,8 @@ gem 'foundation-rails'
 
 gem 'pg_search'
 
+gem 'foundation-icons-sass-rails'
+
 ruby "2.2.0"
 
 # Use ActiveModel has_secure_password
