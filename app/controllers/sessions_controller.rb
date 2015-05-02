@@ -27,8 +27,8 @@ class SessionsController < ApplicationController
   		# Create the session
   		session[:user_id] = auth.user.id
 
-  		# render :text => "Welcome #{auth.user.name}! Also: #{z}"
-      render :js => "localStorage.setItem(\"newsmeter_id\", \"#{session[:user_id].to_s}\");"
+  		render :text => "Welcome #{auth.user.name}! Also: #{z}"
+      # render :js => "localStorage.setItem(\"newsmeter_id\", \"#{session[:user_id].to_s}\");"
 
   	end
   end
