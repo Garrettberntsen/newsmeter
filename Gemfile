@@ -41,7 +41,7 @@ gem 'schema_plus_pg_indexes'
 gem 'omniauth'
 gem 'omniauth-facebook'
 
-gem 'foundation-rails'
+gem 'foundation-rails', '= 5.5.1.0'
 
 gem 'pg_search'
 

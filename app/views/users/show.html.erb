@@ -42,7 +42,7 @@ $(function () {
         },
         title: {
             text: ''
-        },        
+        },
         xAxis: {
             categories: ['<%= DateTime.now.in_time_zone.to_date - 6 %>', '<%= DateTime.now.in_time_zone.to_date - 5 %>', '<%= DateTime.now.in_time_zone.to_date - 4 %>', '<%= DateTime.now.in_time_zone.to_date - 3 %>', '<%= DateTime.now.in_time_zone.to_date - 2 %>', '<%= DateTime.now.in_time_zone.to_date - 1 %>', '<%= DateTime.now.in_time_zone.to_date %>'],
             tickmarkPlacement: 'on',
@@ -74,11 +74,12 @@ $(function () {
     });
 });
 </script>
+
 <div class="row">
 	<div class="small-12 columns" id="container"></div>
 </div>
 <div class="large-2 columns"></div>
-<div class="small-12 large-8 columns">
+<div class="small-12 large-8 columns headline">
 	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <kbd>#{params[:keyword].strip}</kbd>".html_safe : "Page Views" %></h1>
 	<p />
 	<% cur_date = nil %>
@@ -108,3 +109,17 @@ $(function () {
 	<% end %>
 </div>
 <div class="large-2 columns"></div>
+
+<!-- At the bottom of your page but inside of the body tag -->
+<ol class="joyride-list" data-joyride>
+  <li data-id="headline" data-text="Next">
+    <p>Hello and welcome to the Joyride <br>documentation page.</p>
+  </li>
+	<li data-button="End" data-prev-text="Prev">
+    <h4>Stop #3</h4>
+    <p>It works as a modal too!</p>
+  </li>
+</ol>
+<script>
+	$(document).foundation('joyride', 'start');
+</script>
