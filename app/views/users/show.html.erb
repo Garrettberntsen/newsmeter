@@ -79,7 +79,7 @@ $(function () {
 	<div class="small-12 columns" id="container"></div>
 </div>
 <div class="large-2 columns"></div>
-<div class="small-12 large-8 columns headline">
+<div class="small-12 large-8 columns" id="headline">
 	<h1><%= (params.has_key?(:keyword) && params[:keyword].strip != "") ? "Search Results for <kbd>#{params[:keyword].strip}</kbd>".html_safe : "Page Views" %></h1>
 	<p />
 	<% cur_date = nil %>
@@ -112,13 +112,16 @@ $(function () {
 
 <!-- At the bottom of your page but inside of the body tag -->
 <ol class="joyride-list" data-joyride>
-  <li data-id="headline" data-text="Next">
-    <p>Hello and welcome to the Joyride <br>documentation page.</p>
+  <li data-id="container" data-text="Next" data-options="tip_location: left; prev_button: false;">
+		<% if articles_array.count > 0 %>
+    	<p>Check up here for your latest <br>news-browsing stats.</p>
+		<% else %>
+			<p>Once you start browsing news sites,<br>here's where your chart will show up.</p>
+		<% end %>
   </li>
-	<li data-button="End" data-prev-text="Prev">
-    <h4>Stop #3</h4>
-    <p>It works as a modal too!</p>
-  </li>
+	<li data-id="headline" data-text="Done">
+		<p>And down here, you can check out<br>every page view you've seen so far.</p>
+	</li>
 </ol>
 <script>
 	$(document).foundation('joyride', 'start');
