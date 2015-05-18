@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  # around_filter :user_time_zone, :if => :current_user
-
   private
 
   def current_user
@@ -16,11 +14,5 @@ class ApplicationController < ActionController::Base
   		redirect_to login_path, :notice => "You must first log in to access this page."
   	end
   end
-=begin
-
-  def user_time_zone(&block)
-    Time.use_zone("Eastern Time (US & Canada)", &block)
-  end  
-=end
-
+  
 end

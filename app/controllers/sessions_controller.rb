@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
+    puts auth_hash.to_s
   	x = auth_hash.extra.raw_info.friends.data
     z = ""
     x.each do |y|
