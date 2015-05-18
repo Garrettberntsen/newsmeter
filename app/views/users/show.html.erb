@@ -111,18 +111,22 @@ $(function () {
 <div class="large-2 columns"></div>
 
 <!-- At the bottom of your page but inside of the body tag -->
-<ol class="joyride-list" data-joyride>
-  <li data-id="container" data-text="Next" data-options="tip_location: left; prev_button: false;">
-		<% if articles_array.count > 0 %>
-    	<p>Check up here for your latest <br>news-browsing stats.</p>
-		<% else %>
-			<p>Once you start browsing news sites,<br>here's where your chart will show up.</p>
-		<% end %>
-  </li>
-	<li data-id="headline" data-text="Done" data-options="tip_location: top;">
-		<p>And down here, you can check out<br>every page view you've seen so far.</p>
-	</li>
-</ol>
-<script>
-	$(document).foundation('joyride', 'start');
-</script>
+<% unless @user.finished_tour %>
+	<% @user.finished_tour = true %>
+	<% @user.save %>
+	<ol class="joyride-list" data-joyride>
+	  <li data-id="container" data-text="Next" data-options="tip_location: left; prev_button: false;">
+			<% if articles_array.count > 0 %>
+	    	<p>Check up here for your latest <br>news-browsing stats.</p>
+			<% else %>
+				<p>Once you start browsing news sites,<br>here's where your chart will show up.</p>
+			<% end %>
+	  </li>
+		<li data-id="headline" data-text="Done" data-options="tip_location: top;">
+			<p>And down here, you can check out<br>every page view you've seen so far.</p>
+		</li>
+	</ol>
+	<script>
+		$(document).foundation('joyride', 'start');
+	</script>
+<% end %>
