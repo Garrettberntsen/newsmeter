@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
 	# skip_before_filter :verify_authenticity_token
 
   def new
+    redirect_to 'users#show', :notice => "You are already logged in." if current_user
   end
 
   def create
