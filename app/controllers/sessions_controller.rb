@@ -13,16 +13,6 @@ class SessionsController < ApplicationController
     puts auth_hash.extra.raw_info
   	x = auth_hash.extra.raw_info.friends.data
     z = ""
-    current_provider_friends = []
-    x.each do |y|
-      z += y['name'] + " (" + y['id'] +")<br>"
-      current_provider_friends << y['id']
-    end
-
-    # Avoid null values in the SQL Where clauses
-    current_provider_friends = [0] if current_provider_friends.count == 0
-
-    current_provider_friends = Authorization.select(:user_id).where('uid in (?) and provider = ?', current_provider_friends, auth_hash.provider).pluck(:user_id)
 
   	if session[:user_id]
   		# Means our user is signed in. Add the authorization to the user
@@ -37,18 +27,33 @@ class SessionsController < ApplicationController
 
   	end
 
-    current_user_friends = current_user.friendships.pluck(:friend_id)
+    if auth_hash.provider == 'facebook'
 
-    # Avoid null values in the SQL Where clauses
-    current_user_friends = [0] if current_user_friends.count == 0
+      current_provider_friends = []
+      x.each do |y|
+        z += y['name'] + " (" + y['id'] +")<br>"
+        current_provider_friends << y['id']
+      end
 
-    new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user_friends).pluck(:id)
-    new_newsmeter_friends.each do |new_friend|
-      x = Friendship.new :user_id => current_user.id, :friend_id => new_friend, :sharing_scope => "restricted"
-      x.save
+      # Avoid null values in the SQL Where clauses
+      current_provider_friends = [0] if current_provider_friends.count == 0
+
+      current_provider_friends = Authorization.select(:user_id).where('uid in (?) and provider = ?', current_provider_friends, auth_hash.provider).pluck(:user_id)
+
+      current_user_friends = current_user.friendships.pluck(:friend_id)
+
+      # Avoid null values in the SQL Where clauses
+      current_user_friends = [0] if current_user_friends.count == 0
+
+      new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user_friends).pluck(:id)
+      new_newsmeter_friends.each do |new_friend|
+        x = Friendship.new :user_id => current_user.id, :friend_id => new_friend, :sharing_scope => "restricted"
+        x.save
+      end
+
     end
 
-    render :text => "Welcome, #{current_user.name}! Your friends are: #{z}"
+    render :text => "Welcome, #{current_user.name}!"
 
   end
 
