@@ -30,7 +30,10 @@ class SessionsController < ApplicationController
 
   	end
 
+    puts current_provider_friends
+
     new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user.friendships.pluck(:friend_id)).pluck(:id)
+    puts new_newsmeter_friends
     new_newsmeter_friends.each do |new_friend|
       x = Friendship.new :user_id => current_user.id, :friend_id => new_friend, :sharing_scope => "restricted"
       x.save
