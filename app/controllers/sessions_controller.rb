@@ -13,10 +13,16 @@ class SessionsController < ApplicationController
     puts auth_hash.extra.raw_info
 
   	if session[:user_id]
+
+      puts "was logged in already"
+
   		# Means our user is signed in. Add the authorization to the user
   		User.find(session[:user_id]).add_provider(auth_hash)
 
   	else
+
+      puts "is now being logged in"
+
   		#Log him in or sign him up
   		auth = Authorization.find_or_create(auth_hash)
 
