@@ -40,6 +40,7 @@ gem 'schema_plus_pg_indexes'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 
 gem 'foundation-rails', '= 5.5.1.0'
 

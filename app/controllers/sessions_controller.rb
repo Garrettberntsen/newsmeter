@@ -8,6 +8,9 @@ class SessionsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
+    puts auth_hash
+    puts auth_hash.extra
+    puts auth_hash.extra.raw_info
   	x = auth_hash.extra.raw_info.friends.data
     z = ""
     current_provider_friends = []
