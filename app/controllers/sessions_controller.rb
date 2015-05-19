@@ -11,8 +11,6 @@ class SessionsController < ApplicationController
     puts auth_hash
     puts auth_hash.extra
     puts auth_hash.extra.raw_info
-  	x = auth_hash.extra.raw_info.friends.data
-    z = ""
 
   	if session[:user_id]
   		# Means our user is signed in. Add the authorization to the user
@@ -28,6 +26,9 @@ class SessionsController < ApplicationController
   	end
 
     if auth_hash.provider == 'facebook'
+
+      x = auth_hash.extra.raw_info.friends.data
+      z = ""
 
       current_provider_friends = []
       x.each do |y|
