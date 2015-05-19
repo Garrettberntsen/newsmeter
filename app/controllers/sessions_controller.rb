@@ -8,18 +8,18 @@ class SessionsController < ApplicationController
 
   def create
   	auth_hash = request.env['omniauth.auth']
-    puts auth_hash.to_s
   	x = auth_hash.extra.raw_info.friends.data
     z = ""
+    current_provider_friends = []
     x.each do |y|
       z += y['name'] + " (" + y['id'] +")<br>"
+      current_provider_friends << y['id']
     end
+    current_provider_friends = Authorization.select(:user_id).where('uid in (?) and provider = ?', current_provider_friends, auth_hash.provider).pluck(:user_id)
 
   	if session[:user_id]
   		# Means our user is signed in. Add the authorization to the user
   		User.find(session[:user_id]).add_provider(auth_hash)
-
-  		render :text => "You can now login using #{auth_hash["provider"].capitalize} too!"
 
   	else
   		#Log him in or sign him up
@@ -28,9 +28,16 @@ class SessionsController < ApplicationController
   		# Create the session
   		session[:user_id] = auth.user.id
 
-  		render :text => "Welcome #{auth.user.name}! Also: #{z}"
-
   	end
+
+    new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user.friendships.pluck(:friend_id)).pluck(:id)
+    new_newsmeter_friends.each do |new_friend|
+      x = Friendship.new :user_id => current_user.id, :friend_id => new_friend, :sharing_scope => "restricted"
+      x.save
+    end
+
+    render :text => "Welcome, #{current_user.name}! Your friends are: #{z}"
+
   end
 
   def failure
