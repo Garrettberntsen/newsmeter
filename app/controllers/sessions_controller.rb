@@ -15,6 +15,10 @@ class SessionsController < ApplicationController
       z += y['name'] + " (" + y['id'] +")<br>"
       current_provider_friends << y['id']
     end
+
+    # Avoid null values in the SQL Where clauses
+    current_provider_friends = [0] if current_provider_friends.count == 0
+
     current_provider_friends = Authorization.select(:user_id).where('uid in (?) and provider = ?', current_provider_friends, auth_hash.provider).pluck(:user_id)
 
   	if session[:user_id]
@@ -30,10 +34,12 @@ class SessionsController < ApplicationController
 
   	end
 
-    puts current_provider_friends
+    current_user_friends = current_user.friendships.pluck(:friend_id)
 
-    new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user.friendships.pluck(:friend_id)).pluck(:id)
-    puts new_newsmeter_friends
+    # Avoid null values in the SQL Where clauses
+    current_user_friends = [0] if current_user_friends.count == 0
+
+    new_newsmeter_friends = User.select(:id).where('id in (?) and id not in (?)', current_provider_friends, current_user_friends).pluck(:id)
     new_newsmeter_friends.each do |new_friend|
       x = Friendship.new :user_id => current_user.id, :friend_id => new_friend, :sharing_scope => "restricted"
       x.save
