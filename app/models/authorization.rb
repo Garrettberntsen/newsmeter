@@ -7,7 +7,8 @@ class Authorization < ActiveRecord::Base
 			puts auth_hash["info"]["name"]
 			puts auth_hash["info"]["email"]
 			puts auth_hash["info"]["literallyanything"]
-			user = User.create :name => (auth_hash["info"]["name"] == "" ? "" : auth_hash["info"]["name"] ), :email => (auth_hash["info"]["email"] == "" ? "" : auth_hash["info"]["email"])
+			puts auth_hash.inspect
+			user = User.create :name => (auth_hash["info"]["name"].nil? ? "" : auth_hash["info"]["name"] ), :email => (auth_hash["info"]["email"].nil? ? "" : auth_hash["info"]["email"])
 			auth = create :user => user, :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 		end
 
