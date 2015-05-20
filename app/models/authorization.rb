@@ -6,7 +6,8 @@ class Authorization < ActiveRecord::Base
 		unless auth = find_by_provider_and_uid(auth_hash["provider"], auth_hash["uid"])
 			puts auth_hash["info"]["name"]
 			puts auth_hash["info"]["email"]
-			user = User.create :name => (auth_hash["info"].has_key?("name") ? auth_hash["info"]["name"]: "" ), :email => (auth_hash["info"].has_key?("email") ? auth_hash["info"]["email"] : "")
+			puts auth_hash["info"]["literallyanything"]
+			user = User.create :name => (auth_hash["info"]["name"] == "" ? "" : auth_hash["info"]["name"] ), :email => (auth_hash["info"]["email"] == "" ? "" : auth_hash["info"]["email"])
 			auth = create :user => user, :provider => auth_hash["provider"], :uid => auth_hash["uid"]
 		end
 
