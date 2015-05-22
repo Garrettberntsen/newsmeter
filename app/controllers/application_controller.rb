@@ -14,5 +14,7 @@ class ApplicationController < ActionController::Base
   		redirect_to login_path, :notice => "You must first log in to access this page."
   	end
   end
-  
+
+  helper_method :current_user, :authenticate_user
+
 end
