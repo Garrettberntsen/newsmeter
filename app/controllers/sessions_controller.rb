@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	# skip_before_filter :verify_authenticity_token
 
   def new
-    redirect_to({:controller => 'users', :action => 'show'}, :notice => "You are already logged in.") if current_user
+    redirect_to({:controller => 'users', :action => 'show'}, :notice => "You are already logged in.") if current_user && (current_user.authorizations.count == 2)
   end
 
   def create

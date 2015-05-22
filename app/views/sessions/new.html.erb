@@ -3,7 +3,20 @@
   <div class="panel">
   	<h3>Log In</h3>
   	<p>Log in to Newsmeter using Facebook and connect with your friends.</p>
-    <%= link_to "Connect with Facebook", "/auth/facebook", class: "button alert round" %>
-    <%= link_to "Connect with Twitter", "/auth/twitter", class: "button alert round" %>
+    <% if current_user %>
+      <% if current_user.authorizations.exists?(:provider => 'facebook') %>
+        <%= link_to "Connected to Facebook", "#", class: "button alert round" %>
+      <% else %>
+        <%= link_to "Connect with Facebook", "/auth/facebook", class: "button alert round" %>
+      <% end %>
+      <% if current_user.authorizations.exists?(:provider => 'twitter') %>
+        <%= link_to "Connected to Twitter", "#", class: "button alert round" %>
+      <% else %>
+        <%= link_to "Connect with Twitter", "/auth/twitter", class: "button alert round" %>
+      <% end %>
+    <% else %>
+      <%= link_to "Connect with Facebook", "/auth/facebook", class: "button alert round" %>
+      <%= link_to "Connect with Twitter", "/auth/twitter", class: "button alert round" %>
+    <% end %>
   </div>
 </div>
